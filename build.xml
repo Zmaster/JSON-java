@@ -13,7 +13,7 @@
 	<target name="compile-src" depends="init"
         description="compile the runtime classes " >
 		<!-- Compile the java code from ${source.dir} into ${build.dir} -->
-		<javac srcdir="${source.dir}" destdir="${build.dir}" excludes="Test.java" debug="on">
+		<javac srcdir="${source.dir}" destdir="${build.dir}" excludes="**/Test.java" debug="on">
 		</javac>
 	</target>
 
