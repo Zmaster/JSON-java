@@ -10,14 +10,24 @@
 		<mkdir dir="${build.dir}"/>
 	</target>
 
-	<target name="compile" depends="init"
-        description="compile the source " >
+	<target name="compile-src" depends="init"
+        description="compile the runtime classes " >
 		<!-- Compile the java code from ${source.dir} into ${build.dir} -->
-		<javac srcdir="${source.dir}" destdir="${build.dir}" debug="on">
+		<javac srcdir="${source.dir}" destdir="${build.dir}" excludes="Test.java" debug="on">
 		</javac>
 	</target>
 
-	<target name="dist" depends="compile"
+    <target name="compile-tests" depends="compile-src"
+        description="compile the tests " >
+		<!-- Compile the java code from ${source.dir} into ${build.dir} -->
+		<javac srcdir="${source.dir}" destdir="${build.dir}" includes="Test.java" debug="on">
+		</javac>
+	</target>
+
+    <target name="compile" depends="init, compile-src, compile-tests"
+        description="compiles all the source"/>
+
+	<target name="dist" depends="compile-src"
         description="generate the distribution" >
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}/lib"/>

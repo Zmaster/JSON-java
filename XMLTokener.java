@@ -42,7 +42,7 @@ public class XMLTokener extends JSONTokener {
    public static final Map entity;
 
    static {
-       entity = new TreeMap<String, Object>(8);
+       entity = new TreeMap<String, Object>();
        entity.put("amp",  XML.AMP);
        entity.put("apos", XML.APOS);
        entity.put("gt",   XML.GT);
