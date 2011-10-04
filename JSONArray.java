@@ -108,29 +108,29 @@ public class JSONArray {
             throw x.syntaxError("A JSONArray text must start with '['");
         }
         if (x.nextClean() != ']') {
-	        x.back();
-	        for (;;) {
-	            if (x.nextClean() == ',') {
-	                x.back();
-	                this.myArrayList.add(JSONObject.NULL);
-	            } else {
-	                x.back();
-	                this.myArrayList.add(x.nextValue());
-	            }
-	            switch (x.nextClean()) {
-	            case ';':
-	            case ',':
-	                if (x.nextClean() == ']') {
-	                    return;
-	                }
-	                x.back();
-	                break;
-	            case ']':
-	            	return;
-	            default:
-	                throw x.syntaxError("Expected a ',' or ']'");
-	            }
-	        }
+            x.back();
+            for (;;) {
+                if (x.nextClean() == ',') {
+                    x.back();
+                    this.myArrayList.add(JSONObject.NULL);
+                } else {
+                    x.back();
+                    this.myArrayList.add(x.nextValue());
+                }
+                switch (x.nextClean()) {
+                case ';':
+                case ',':
+                    if (x.nextClean() == ']') {
+                        return;
+                    }
+                    x.back();
+                    break;
+                case ']':
+                    return;
+                default:
+                    throw x.syntaxError("Expected a ',' or ']'");
+                }
+            }
         }
     }
 
@@ -152,12 +152,12 @@ public class JSONArray {
      * @param collection     A Collection.
      */
     public JSONArray(Collection<?> collection) {
-		this.myArrayList = new ArrayList<Object>();
-		if (collection != null) {
-		    for( Object object : collection ) {
+        this.myArrayList = new ArrayList<Object>();
+        if (collection != null) {
+            for( Object object : collection ) {
                 this.myArrayList.add(JSONObject.wrap(object));  
-			}
-		}
+            }
+        }
     }
 
     
@@ -774,7 +774,7 @@ public class JSONArray {
      * or null if there was no value.
      */
     public Object remove(int index) {
-    	Object o = opt(index);
+        Object o = opt(index);
         this.myArrayList.remove(index);
         return o;
     }
