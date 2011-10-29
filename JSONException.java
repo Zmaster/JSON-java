@@ -6,8 +6,6 @@ package org.json;
  * @version 2010-12-24
  */
 public class JSONException extends Exception {
-	private static final long serialVersionUID = 0;
-	private Throwable cause;
 
     /**
      * Constructs a JSONException with an explanatory message.
@@ -18,11 +16,11 @@ public class JSONException extends Exception {
     }
 
     public JSONException(Throwable cause) {
-        super(cause.getMessage());
-        this.cause = cause;
+        super(cause);
     }
 
-    public Throwable getCause() {
-        return this.cause;
+    public JSONException(String message, Throwable cause) {
+        super(message, cause);
     }
+
 }
