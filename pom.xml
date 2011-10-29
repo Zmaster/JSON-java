@@ -39,7 +39,9 @@
 					<include>HTTP.java</include>
 					<include>HTTPTokener.java</include>
 					<include>JSONArray.java</include>
+					<include>JSONBase.java</include>
 					<include>JSONException.java</include>
+					<include>JSONExpression.java</include>
 					<include>JSONML.java</include>
 					<include>JSONObject.java</include>
 					<include>JSONString.java</include>
@@ -51,6 +53,7 @@
 				</includes>
 				<excludes>
 					<exclude>Test.java</exclude>
+					<exclude>TestExpression.java</exclude>
 				</excludes>
 				<filtering>false</filtering>
 				<targetPath>${project.basedir}/target/filtered-sources/java/org/json/</targetPath>
@@ -59,6 +62,7 @@
 				<directory>${project.basedir}</directory>
 				<includes>
 					<include>Test.java</include>
+					<include>TestExpression.java</include>
 				</includes>
 				<filtering>false</filtering>
 				<targetPath>${project.basedir}/target/filtered-tests/java/org/json/</targetPath>
@@ -120,7 +124,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.2</version>
+			<version>${junit.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>

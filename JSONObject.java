@@ -88,14 +88,14 @@ import java.util.ResourceBundle;
  * @author JSON.org
  * @version 2011-10-16
  */
-public class JSONObject {
+public class JSONObject extends JSONBase {
 
     /**
      * JSONObject.NULL is equivalent to the value that JavaScript calls null,
      * whilst Java's null is equivalent to the value that JavaScript calls
      * undefined.
      */
-     private static final class Null {
+    private static final class Null extends JSONBase {
 
         /**
          * There is only intended to be a single instance of the NULL object,
@@ -123,6 +123,11 @@ public class JSONObject {
         public String toString() {
             return "null";
         }
+        
+        @Override
+        public Object lookupProperty(String name) {
+            return null;
+        }
     }
 
 
@@ -138,7 +143,7 @@ public class JSONObject {
      * <code>JSONObject.NULL.equals(null)</code> returns <code>true</code>.
      * <code>JSONObject.NULL.toString()</code> returns <code>"null"</code>.
      */
-    public static final Object NULL = new Null();
+    public static final JSONBase NULL = new Null();
 
 
     /**
@@ -708,7 +713,11 @@ public class JSONObject {
         return this.map.size();
     }
 
-
+    @Override
+    public Object lookupProperty(String name) {
+        return map.get(name);
+    }
+    
     /**
      * Produce a JSONArray containing the names of the elements of this
      * JSONObject.
