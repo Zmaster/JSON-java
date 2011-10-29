@@ -1,15 +1,18 @@
 task :clean do
   require 'fileutils'
-  FileUtils.rm_rf 'compile'
+  FileUtils.rm_rf 'target'
 end
 
 task :compile do
-  Dir.mkdir 'compile'
-  `javac -d compile src\\org\\json\\*.java`
+  Dir.mkdir 'target'
+  Dir.mkdir 'target/filtered-classes/'
+  Dir.mkdir 'target/filtered-classes/org/'
+  Dir.mkdir 'target/filtered-classes/org/json/'
+  FileUtils.cp '*.java', 'target/filtered-classes/org/json/'
+  Dir.mkdir 'target/classes/'
+  `javac -d target/classes target/filtered-classes/org/json/*.java`
 end
 
 task :jar do
-  Dir.chdir 'compile'
-  `jar cvf org.json.jar .`
-  FileUtils.move 'org.json.jar', '..'
+  `jar cvf ./target/JSON.jar ./target/classes`
 end
