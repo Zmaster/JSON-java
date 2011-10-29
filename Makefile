@@ -3,41 +3,47 @@
 # This file is part of JSON-java. It is distributed under the same
 # license as JSON-java. Don't use it to be evil.
 
-DOC_DIR ?= doc/
+DOC_DIR ?= target/apidocs/
 
-SOURCES = src/org/json/CDL.java \
-          src/org/json/JSONObject.java \
-          src/org/json/Cookie.java \
-          src/org/json/JSONStringer.java \
-          src/org/json/CookieList.java \
-          src/org/json/JSONString.java \
-          src/org/json/HTTP.java \
-          src/org/json/JSONTokener.java \
-          src/org/json/HTTPTokener.java \
-          src/org/json/JSONWriter.java \
-          src/org/json/JSONArray.java \
-          src/org/json/JSONException.java \
-          src/org/json/XML.java \
-          src/org/json/JSONML.java \
-          src/org/json/XMLTokener.java
+SOURCES = CDL.java \
+          JSONObject.java \
+          Cookie.java \
+          JSONStringer.java \
+          CookieList.java \
+          JSONString.java \
+          HTTP.java \
+          JSONTokener.java \
+          HTTPTokener.java \
+          JSONWriter.java \
+          JSONArray.java \
+          JSONException.java \
+          XML.java \
+          JSONML.java \
+          XMLTokener.java
 
 ifdef WITH_JUNIT
 SOURCES += \
-      src/org/json/Test.java
+      Test.java
 endif
 
-.PHONY: documentation compile jar clean
+.PHONY: documentation compile jar clean init
 
-jar: compile
-	jar cf JSON.jar org/
+jar: init compile
+	jar cf ./target/JSON.jar ./target/classes
 
 compile: $(SOURCES)
-	javac -d ./ -sourcepath src/ $^
+	javac -d ./target/classes -sourcepath ./target/filtered-sources/org/json/ $^
 
 documentation: $(SOURCES)
 	javadoc -d $(DOC_DIR) -doctitle JSON-java -windowtitle JSON-java $^
 
 clean:
-	-rm -rf doc/
-	-rm -rf org/
-	-rm JSON.jar
+	-rm -rf target/
+
+init:
+	-mkdir target/
+	-mkdir target/apidocs/
+	-mkdir target/classes/
+	-mkdir -p target/filtered-sources/org/json/
+	cp $(SOURCES) target/filtered-sources/org/json/
+	
