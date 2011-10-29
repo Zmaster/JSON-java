@@ -31,7 +31,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -86,7 +86,7 @@ import java.util.ResourceBundle;
  * <li>Numbers may have the <code>0x-</code> <small>(hex)</small> prefix.</li>
  * </ul>
  * @author JSON.org
- * @version 2011-04-05
+ * @version 2011-10-16
  */
 public class JSONObject {
 
@@ -145,7 +145,7 @@ public class JSONObject {
      * Construct an empty JSONObject.
      */
     public JSONObject() {
-        this.map = new TreeMap<String, Object>();
+        this.map = new HashMap<String, Object>();
     }
 
 
@@ -234,7 +234,7 @@ public class JSONObject {
      * @throws JSONException 
      */
     public JSONObject(Map map) {
-        this.map = new TreeMap<String, Object>();
+        this.map = new HashMap<String, Object>();
         if (map != null) {
             for( Map.Entry<String, Object> e : this.map.entrySet() ) {
                 Object value = e.getValue();
@@ -1224,6 +1224,7 @@ public class JSONObject {
      * @return A simple JSON value.
      */
     public static Object stringToValue(String string) {
+        Double d;    
         if (string.equals("")) {
             return string;
         }
@@ -1258,7 +1259,10 @@ public class JSONObject {
             try {
                 if (string.indexOf('.') > -1 || 
                         string.indexOf('e') > -1 || string.indexOf('E') > -1) {
-                    return Double.valueOf(string);
+                    d = Double.valueOf(string);
+                    if (!d.isInfinite() && !d.isNaN()) {
+                        return d;
+                    }
                 } else {
                     Long myLong = new Long(string);
                     if (myLong.longValue() == myLong.intValue()) {

@@ -40,7 +40,7 @@ SOFTWARE.
  * comparisons of .toString to a string literal are likely to fail.
  *
  * @author JSON.org
- * @version 2011-10-03
+ * @version 2011-10-25
  */
 public class Test extends TestCase {
     public Test(String name) {
@@ -67,6 +67,10 @@ public class Test extends TestCase {
         jsonobject = XML.toJSONObject(string);
         assertEquals("{\"test\": {\n  \"blank\": \"\",\n  \"empty\": \"\"\n}}", jsonobject.toString(2));
         assertEquals("<test><blank/><empty/></test>", XML.toString(jsonobject));
+
+        string = "<subsonic-response><playlists><playlist id=\"476c65652e6d3375\" int=\"12345678901234567890123456789012345678901234567890213991133777039355058536718668104339937\"/><playlist id=\"50617274792e78737066\"/></playlists></subsonic-response>";
+        jsonobject = XML.toJSONObject(string);
+        assertEquals("{\"subsonic-response\":{\"playlists\":{\"playlist\":[{\"id\":\"476c65652e6d3375\",\"int\":\"12345678901234567890123456789012345678901234567890213991133777039355058536718668104339937\"},{\"id\":\"50617274792e78737066\"}]}}}", jsonobject.toString());
     }
 
     public void testNull() throws Exception {
@@ -94,6 +98,10 @@ public class Test extends TestCase {
         string = "[001122334455]";
         jsonarray = new JSONArray(string);
         assertEquals("[1122334455]", jsonarray.toString());
+
+        string = "[666e666]";
+        jsonarray = new JSONArray(string);
+        assertEquals("[\"666e666\"]", jsonarray.toString());
 
         string = "[00.10]";
         jsonarray = new JSONArray(string);
@@ -836,6 +844,15 @@ public class Test extends TestCase {
             fail("expecting JSONException here.");
         } catch (JSONException jsone) {
             assertEquals("Mismatched 'right' and 'wrong' at 15 [character 16 line 1]", jsone.getMessage());
+        }
+
+        try {
+            string = "This ain't XML.";
+            jsonarray = JSONML.toJSONArray(string);
+            System.out.println(jsonarray.toString(4));
+            fail("expecting JSONException here.");
+        } catch (JSONException jsone) {
+            assertEquals("Bad XML at 17 [character 18 line 1]", jsone.getMessage());
         }
 
         try {
