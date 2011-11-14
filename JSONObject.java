@@ -238,7 +238,7 @@ public class JSONObject extends JSONBase {
      *  the JSONObject.
      * @throws JSONException 
      */
-    public JSONObject(Map map) {
+    public JSONObject(Map<String, Object> map) {
         this.map = new HashMap<String, Object>();
         if (map != null) {
             for( Map.Entry<String, Object> e : this.map.entrySet() ) {
